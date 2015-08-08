@@ -30,6 +30,8 @@ define Package/intltool
   BUILDONLY:=1
 endef
 
+HOST_CONFIGURE_ARGS += ac_cv_path_PERL=$(STAGING_DIR_HOST)/usr/bin/perl
+
 define Package/intltool/description
   intltool is a set of tools to centralize translation of many different
   file formats using GNU gettext-compatible PO files.
