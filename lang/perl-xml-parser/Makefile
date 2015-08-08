@@ -19,11 +19,13 @@ PKG_LICENSE:=GPL-1.0+ Artistic-1.0-Perl
 PKG_MAINTAINER:=Marcel Denia <naoir@gmx.net>
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/perl/XML-Parser-$(PKG_VERSION)
+HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/perl/XML-Parser-$(PKG_VERSION)
 
 EXPAT_LIBPATH:=$(STAGING_DIR)/usr/lib
 EXPAT_INCPATH=$(STAGING_DIR)/usr/include
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/host-build.mk
 include ../perl/perlmod.mk
 
 define Package/perl-xml-parser
@@ -53,9 +55,22 @@ define Build/Compile
 	$(call perlmod/Compile,,,$(PKG_BUILD_DIR)/Expat)
 endef
 
+define Host/Configure
+	$(call perlmod/host/Configure,,)
+endef
+
+define Host/Compile
+	$(call perlmod/host/Compile,,)
+endef
+
+define Host/Install
+	$(call perlmod/host/Install,$(1),)
+endef
+
 define Package/perl-xml-parser/install
 	$(call perlmod/Install,$(1),auto/XML XML)
 endef
 
 
 $(eval $(call BuildPackage,perl-xml-parser))
+$(eval $(call HostBuild))
